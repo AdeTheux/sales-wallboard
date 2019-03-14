@@ -1,0 +1,22 @@
+<%= link_to '← Back to the quarters list', quarters_path, :class => 'btn' %>
+<%= link_to 'Edit', edit_quarter_path(@quarter), :class => 'btn btn-primary' %>
+
+<h1 class='pagetitle'>Quarter <%= @quarter.name %></h1>
+
+<h3>Target: <%= currency @quarter.target %></h3>
+<ul>
+  <li>Month 1: <%= currency @quarter.month_target_1 %></li>
+  <li>Month 2: <%= currency @quarter.month_target_2 %></li>
+  <li>Month 3: <%= currency @quarter.month_target_3 %></li>
+</ul>
+
+<div>
+  <h3>Involved sales rep</h3>
+  <ul>
+    <% @quarter.assignations.each do |assign| %>
+      <li><%= assign.user.name %>: <%= currency assign.target %></li>
+    <% end%>
+  </ul>
+</div>
+
+<h3>Adjustment: <%= currency @quarter.adjustment %></h3>

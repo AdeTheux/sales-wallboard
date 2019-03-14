@@ -1,0 +1,32 @@
+<%= form_for(iframe) do |f| %>
+  <% if iframe.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(iframe.errors.count, "error") %> prohibited this iframe from being saved:</h2>
+
+      <ul>
+      <% iframe.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :url %>
+    <%= f.text_field :url %>
+  </div>
+
+  <div class="field">
+    <%= f.label :department %>
+    <%= f.select :department, [['Sales', 'sales'], ['Presales', 'presales']] %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,21 @@
+<div class="row-fluid">
+  <div class="span12">
+    <% if current_user.is_admin %>
+      <%= link_to "← Back to the users list", users_path, :class => 'btn' %>
+    <% else %>
+      <%= link_to "← Back to the dashboard", '/', :class => 'btn' %>
+    <% end %>
+    <%= link_to "Edit user", edit_user_path(@user.id), :class => 'btn btn-primary' %>
+  </div>
+  <div class="span12">
+    <h1 class='pagetitle'>User <%= @user.name %></h1>
+
+    <dl>
+      <dt>Email</dt>
+      <dd><%= @user.email %></dd>
+      <dt>Is admin?<dt>
+      <dd><%= @user.is_admin %></dd>
+    </dl>
+
+  </div>
+</div>

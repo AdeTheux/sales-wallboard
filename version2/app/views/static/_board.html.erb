@@ -1,0 +1,12 @@
+<div class="wallboards-bg">
+  <% @wallboards.each do |wallboard| %>
+    <iframe class="bime-dashboard" src="<%= wallboard.url %>"></iframe>
+  <% end %>
+
+  <div class="congrats-container">
+    <div id="shapes"></div>
+    <div class="sale"></div>
+  </div>
+
+  <%= javascript_include_tag 'wallboards' %>
+</div>

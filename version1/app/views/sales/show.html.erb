@@ -1,0 +1,9 @@
+<%= link_to '← Back to the sales list', sales_path, :class => 'btn' %>
+<%= link_to 'Edit', edit_sale_path(@sale), :class => 'btn btn-primary' %>
+
+<h1 class='pagetitle'>Sale of <%= @sale.date %></h1>
+
+<h2>ARR: <%= currency @sale.arr %></h2>
+<h2>MRR: <%= currency @sale.mrr %></h2>
+
+<div>Company <%= @sale.company %></div>

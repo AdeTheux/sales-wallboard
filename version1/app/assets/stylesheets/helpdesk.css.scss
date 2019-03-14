@@ -1,0 +1,22 @@
+// Place all the styles related to the helpdesk controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#helpdesk-body {
+  .time-select select{
+      width: 72px;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  input#helpdesk-submit {
+    margin-top: 10px;
+    float: right;
+  }
+
+  .helpdesk-selector {
+    margin-top: 50px;
+  }
+}

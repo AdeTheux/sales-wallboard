@@ -1,0 +1,107 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+*/
+
+
+//= require bootstrap
+//= require bootstrap-responsive
+//= require flick/jquery-ui-1.10.1.custom
+
+
+input.btn {
+  position: relative;
+  top: 3px;
+}
+
+body {
+  padding-top: 80px;
+  padding-bottom: 40px;
+}
+
+.btn-large.btn-primary {
+  color: white;
+}
+
+.space {
+  height: 6em;
+}
+
+.pagetitle {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+
+body .navbar .brand {
+  position: relative;
+  top: 3px;
+  background-image: url(logo.png);
+  background-repeat: no-repeat;
+  background-size: 20%;
+  background-position: left center;
+  padding-left: 45px;
+  display: block;
+  margin-left: 0px;
+}
+
+.btn-large i {
+  position: relative;
+  top: 2px;
+  left: -3px;
+}
+
+label[for="user_remember_me"] {
+  display: inline;
+}
+
+
+audio {
+  display: none !important;
+}
+
+#popup {
+  background-repeat: no-repeat !important;
+  background-position: center top !important;
+  background: url('/bud.png');
+  text-align: center;
+  padding-top: 4em;
+  font-size: 5em;
+  line-height: 1.6em;
+}
+
+.ribbon {
+  z-index: 3998;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 5em;
+  border-top: 1px solid #ccc;
+  max-width: 500px;
+  margin-bottom: 1em;
+  margin-left: auto;
+  padding-top: 3em;
+  margin-right: auto;
+}
+
+
+.footer img {
+  vertical-align: middle;
+}
+
+.faked_session_alert {
+  margin-bottom: 2em;
+}

@@ -1,0 +1,30 @@
+<p>
+  MMR <%= currency(@sale.mrr) %> - <%= @sale.user.username %> - <%= @sale.company %>
+</p>
+<p>
+  Remaining EMEA Monthly Target: MRR <%= currency(@stats.mrr_remaining_monthly) %> (Total: MRR <%= currency(@stats.mrr_total_monthly) %>)
+  <br/>
+  Remaining EMEA Quarterly Target: MRR <%= currency(@stats.mrr_remaining_quarterly) %> (Total: MRR <%= currency(@stats.mrr_total_quarterly) %>)
+</p>
+
+<% if @sale.user.current_assignation %>
+
+<p>Sales Person Summary:</p>
+
+<strong>--- Quarter ---</strong>
+<p>
+Target: MRR <%= currency @user_stats.quarter_target %>
+<br/>
+Booked: MRR <%= currency @user_stats.quarter_target_done %>
+<br/>
+To-go: MRR <%= currency @user_stats.quarter_target_remaining %>
+</p>
+<strong>--- Monthly ---</strong>
+<p>
+Target: MRR <%= currency @user_stats.month_target %>
+<br/>
+Booked: MRR <%= currency @user_stats.month_target_done %>
+<br/>
+To-go: MRR <%= currency @user_stats.month_target_remaining %>
+</p>
+<% end %>

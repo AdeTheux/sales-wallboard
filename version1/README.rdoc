@@ -1,0 +1,17 @@
+== EMEA-Sentry
+
+  foreman start -f Procfile.dev
+
+
+=== Installation
+
+  rvm use 1.9.2
+  rvm gemset create emea
+  rvm use 1.9.2@emea
+  bundle install
+  initdb ./tmp/pg
+  postgresql -D ./tmp/pg &
+  createdb emea-sentry
+  createdb emea-sentry_test
+  bundle exec rake db:create db:migrate db:seed
+  fg # kill the postgresql process

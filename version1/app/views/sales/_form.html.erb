@@ -1,0 +1,44 @@
+<%= form_for(@sale) do |f| %>
+  <% if @sale.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sale.errors.count, "error") %> prohibited this sale from being saved:</h2>
+
+      <ul>
+      <% @sale.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+
+
+    </div>
+  <% end %>
+
+  <div class='clearfix'>
+    <%= f.label :date %>
+    <%= f.text_field :date %>
+    <%= f.label :arr, 'ARR' %>
+    <%= f.text_field :arr %>
+    <%= f.label :company %>
+    <%= f.text_field :company %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit :class => 'btn btn-primary' %>
+  </div>
+<% end %>
+
+
+<script type="text/javascript">
+  $(document).ready(function () {
+      var picker = $("#sale_date").datepicker({
+        showOn: "button",
+        buttonImage: "/calendar.png",
+        dateFormat: "yy-mm-dd",
+      });
+
+      <% if !@sale.date %>
+        var today = new Date();
+        $('#sale_date').datepicker('setDate', today.toISOString().split('T')[0]);
+      <% end %>
+  });
+</script>

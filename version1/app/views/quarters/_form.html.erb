@@ -1,0 +1,81 @@
+<div class="row-fluid">
+  <div class="span12">
+
+  <%= form_for(@quarter) do |f| %>
+    <% if @quarter.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@quarter.errors.count, "error") %> prohibited this quarter from being saved:</h2>
+
+        <ul>
+        <% @quarter.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="clearfix">
+      <%= label_tag 'year', 'Year' %>
+      <%= number_field_tag 'year', @quarter.quarter_year %>
+
+      <%= label_tag 'date_quarter', 'Quarter' %>
+      <%= select_tag('date_quarter', options_for_select([['Q1', 0], ['Q2', 1], ['Q3', 2], ['Q4', 3]], @quarter.quarter_number)) %>
+
+      <table>
+        <tr>
+          <td>
+            <%= f.label :target, 'Month 1 ARR target' %>
+            <%= f.text_field :month_target_1, :placeholder => "Target" %>
+          </td>
+          <td>
+            <%= f.label :target, 'Month 2 ARR target' %>
+            <%= f.text_field :month_target_2, :placeholder => "Target" %>
+          </td>
+          <td>
+            <%= f.label :target, 'Month 3 ARR target' %>
+            <%= f.text_field :month_target_3, :placeholder => "Target" %>
+          </td>
+        </tr>
+      </table>
+
+      <%= f.label :current %>
+      <%= f.check_box :current %>
+    </div>
+
+    <div>
+      <%= f.label :assignations, "Involved sales rep and individual targets" %>
+
+      <% @users.each do |user| %>
+        <div>
+          <%= check_box_tag 'users_ids[]', user.id, @quarter.is_user_assigned?(user) %>
+          <%= user.name %>
+          <table style="width: 2px;">
+            <tr>
+              <td>
+                Month 1 ARR target
+                <%= text_field_tag "users_targets[#{user.id}][0]", @quarter.user_month_target(user, 1), :placeholder => 'Target', :step => 1000 %>
+              <td>
+              <td>
+                Month 2 ARR target
+                <%= text_field_tag "users_targets[#{user.id}][1]", @quarter.user_month_target(user, 2), :placeholder => 'Target', :step => 1000 %>
+              <td>
+              <td>
+                Month 3 ARR target
+                <%= text_field_tag "users_targets[#{user.id}][2]", @quarter.user_month_target(user, 3), :placeholder => 'Target', :step => 1000 %>
+              <td>
+            </tr>
+          </table>
+        </div>
+      <% end %>
+    </div>
+
+    <%= f.label :adjustment, 'Adjustment (in MRR)' %>
+    <%= f.number_field :adjustment %>
+
+
+    <div class="form-actions">
+      <%= f.submit :class => "btn btn-primary" %>
+    </div>
+  <% end %>
+  </div>
+</div>

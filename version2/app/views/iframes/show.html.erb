@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @iframe.title %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @iframe.url %>
+</p>
+
+<p>
+  <strong>Department:</strong>
+  <%= @iframe.department %>
+</p>
+
+<%= link_to 'Edit', edit_iframe_path(@iframe) %> |
+<%= link_to 'Back', iframes_path %>

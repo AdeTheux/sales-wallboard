@@ -1,0 +1,28 @@
+<%= link_to "← Back to the admin panel", admin_main_path, :class => 'btn' %>
+<%= link_to 'New Quarter', new_quarter_path, :class => 'btn btn-primary' %>
+
+
+<h1 class='pagetitle'>Listing quarters</h1>
+
+
+<table class="table table-striped">
+  <tr>
+    <th>Current</th>
+    <th>Begin date</th>
+    <th>End date</th>
+    <th>Target</th>
+    <th>Actions</th>
+  </tr>
+
+<% @quarters.each do |quarter| %>
+  <tr>
+    <td><% if quarter.current %>✓<% end %></td>
+    <td><%= quarter.begin_date %></td>
+    <td><%= quarter.end_date %></td>
+    <td><%= currency quarter.target %></td>
+    <td><%= link_to quarter do %><i class='icon-search'></i><% end %>
+        <%= link_to edit_quarter_path(quarter.id) do %><i class="icon-edit"></i><% end %>
+        <%= link_to quarter, confirm: 'Are you sure?', method: :delete do %><i class='icon-trash'></i><% end %></td>
+  </tr>
+<% end %>
+</table>

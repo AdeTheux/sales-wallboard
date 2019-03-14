@@ -1,0 +1,25 @@
+<div class="row-fluid">
+  <%= link_to "← Back to the admin panel", admin_main_path, :class => 'btn' %>
+  <%= link_to 'New user', new_user_registration_path, :class => 'btn btn-primary' %>
+
+  <h1 class='pagetitle'>Listing users</h1>
+
+  <table class="table table-striped">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td><%= link_to user, :title => "View details" do %><i class='icon-search'></i><% end %>
+          <%= link_to edit_user_path(user.id), :title => "Edit" do %><i class="icon-edit"></i><% end %>
+          <%= link_to user, :title => "Delete", confirm: 'Are you sure?', method: :delete do %><i class='icon-trash'></i><% end %>
+          <%= link_to admin_loginas_path(user.id), :title => "Login as" do %><i class='icon-user'></i><% end %></td>
+    </tr>
+  <% end %>
+  </table>
+</div>

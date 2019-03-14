@@ -1,0 +1,37 @@
+<%= form_for(win) do |f| %>
+  <% if win.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(win.errors.count, "error") %> prohibited this win from being saved:</h2>
+
+      <ul>
+      <% win.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <label for="">Company</label>
+    <%= f.text_field :company %>
+  </div>
+
+  <div class="field">
+    <label for="">How many agents?</label>
+    <%= f.text_field :agents %>
+  </div>
+
+  <div class="field">
+    <h4>What is the MMR?</h4>
+    <%= f.text_field :mrr %>
+  </div>
+
+  <div class="field">
+    <label for="">Who were the reps?</label>
+    <%= f.text_field :reps %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,4 @@
+web: bundle exec rails server thin -p $PORT -e $RACK_ENV
+#pg: postgres -D ./tmp/pg
+redis: redis-server
+ws: bundle exec rake jobs:websocket

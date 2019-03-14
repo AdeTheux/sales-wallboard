@@ -1,0 +1,59 @@
+<div class="row-fluid">
+  <div class="span12">
+
+    <form data-remote="true" action='send'>
+    <textarea name="message" placeholder="Type your message here and press the send button."></textarea>
+
+
+      <div>
+        <input type="radio" name="notiftype" id="optionsRadios1" value="simple" checked>
+        Desktop notification
+      </div>
+
+      <div>
+        <input type="radio" name="notiftype" id="optionsRadios2" value="big">
+        Desktop notification + Big pop-up
+      </div>
+
+      <div>
+        <input type="radio" name="notiftype" id="optionsRadios3" value="music">
+        Desktop notification + Big pop-up + Awesome music
+        <blockquote>
+          <% @builtin_sounds.keys.each do |name| %>
+            <div>
+              <input type="radio" name="music" value="<%= name %>"> <%= name %>
+            </div>
+          <% end %>
+
+          <input type="radio" name="music" value="custom">
+
+          Custom: <input type="text" name="customfile" placeholder="Put an URL to an MP3 file">
+        </blockquote>
+      </div>
+
+      <input type='submit' value="Send" class='btn btn-primary btn-medium'>
+
+    </form>
+
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('form').submit(function(){
+      var ta = $('textarea');
+      var message = ta.val();
+
+      $.ajax({
+        type: 'POST',
+        url: '/admin/notification/send',
+        data: $('form').serialize()
+      }).done(function () {
+        ta.val('');
+      });
+
+      return false;
+    });
+  });
+</script>

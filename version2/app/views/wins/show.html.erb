@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @win.company %>
+</p>
+
+<p>
+  <strong>Agents:</strong>
+  <%= @win.agents %>
+</p>
+
+<p>
+  <strong>Mrr:</strong>
+  <%= @win.mrr %>
+</p>
+
+<p>
+  <strong>Reps:</strong>
+  <%= @win.reps %>
+</p>
+
+<%= link_to 'Edit', edit_win_path(@win) %> |
+<%= link_to 'Back', wins_path %>

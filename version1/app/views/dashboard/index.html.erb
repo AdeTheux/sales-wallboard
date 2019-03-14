@@ -1,0 +1,249 @@
+<% if @quarter.nil? %>
+
+  <div class="row-fluid">
+    <div class="span12">
+      <h1>OH! Your administrators haven't started a quarter yet.</h1>
+      <p>
+        Please wait until they do so. Meanwhile, tell them how much you love them.
+      </p>
+    </div>
+  </div>
+
+<% else %>
+
+  <div class='row-fluid'>
+    <div class='span3'>
+      <h3>Quarter progression</h3>
+      <div class="progress progress-striped progress-info">
+        <div class='bar'
+          style='width: <%= @quarter_progress %>%'>
+        </div>
+      </div>
+    </div>
+
+    <div class='span3'>
+      <h3>Month progression</h3>
+      <div class="progress progress-striped progress-info">
+        <div class='bar'
+          style='width: <%= @month_progress %>%'>
+        </div>
+      </div>
+    </div>
+
+    <div class='span3'>
+      <h3>Quote of the year</h3>
+      <blockquote>Winners Win
+        <small>Robert Blackler</small></blockquote>
+    </div>
+
+    <% if !current_user.is_dashboard_only && current_user.part_of_quarter? %>
+      <div class='span3 add-sale'>
+        <%= link_to new_sale_path, :class => "btn btn-medium btn-primary" do %>
+          <i class='icon-plus icon-white'></i> Add sale
+        <% end %>
+        <%= link_to helpdesk_index_path, :class => "btn btn-medium btn-primary btn-success" do %>
+        <i class='icon-plus icon-white'></i> Request Enablers
+        <% end %>
+        <a href="#" class="refresh btn btn-medium"><i class='icon-refresh'></i></a>
+      </div>
+    <% end %>
+
+  </div>
+    <div class='space' style="display:none;"></div>
+  <div class='row-fluid'>
+    <div class='span12'>
+      <div class='row-fluid'>
+        <div class='span6 team team-border'>
+
+          <select id='dashboard_range'>
+            <%= options_for_select(User::DashboardRange, current_user.dashboard_range) %>
+          </select>
+
+          <div class='row-fluid'>
+            <div class='span6'>
+              Team ARR
+              <h1 class='quarter'>
+                <%= currency @done_team_arr %>
+                <span class='sub'>
+                  Target: <%= currency @quarter.target %>
+                </span>
+                <span class='sub' style="color:red; margin-top: -10px;">
+                  To Go: <%= currency (@quarter.target-@done_team_arr) %>
+                </span>
+              </h1>
+              <h1 class='month'>
+                <%= currency @done_team_arr_month %>
+                <span class='sub'>
+                  Target: <%= currency @quarter.month_target %>
+                </span>
+                <span class='sub' style="color:red; margin-top: -10px;">
+                  To Go: <%= currency (@quarter.month_target-@done_team_arr_month) %>
+                </span>
+              </h1>
+            </div>
+            <div class='span6'>
+              Team MRR
+              <h1 class='quarter'>
+                <%= currency @done_team_arr/12.0 %>
+                <span class='sub'>
+                  Target: <%= currency @quarter.mrr %>
+                </span>
+                <span class='sub' style="color:red; margin-top: -10px;">
+                    To Go: <%= currency (@quarter.mrr-@done_team_arr/12.0) %>
+                </span>
+              </h1>
+              <h1 class='month'>
+                <%= currency @done_team_arr_month/12.0 %>
+                <span class='sub'>
+                  Target: <%= currency @quarter.month_mrr %>
+                </span>
+                <span class='sub' style="color:red; margin-top: -10px;">
+                    To Go: <%= currency (@quarter.month_mrr-@done_team_arr_month/12.0) %>
+                </span>
+              </h1>
+            </div>
+            <div class='span1' style="display: none;"></div>
+            <div class='span11'>
+              <h3>Team target completion MRR</h3>
+
+              <div class="progress progress-striped progress-success">
+                <%= bar('quarter', @percent_team_arr) %>
+                <%= bar('month', @percent_team_arr_month) %>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <% if current_user.current_assignation %>
+          <div class='span6 you'>
+              <select>
+                <option value='quarter'>Quarter</option>
+                <option value='month' selected>Monthly</option>
+              </select>
+
+              <div class='row-fluid'>
+                <div class='span6'>
+                  Your ARR
+                  <h1 class='quarter'>
+                    <%= currency @done_you_arr %>
+                    <span class='sub'>
+                      Target: <%= currency current_user.current_assignation.target %>
+                    </span>
+                  </h1>
+                  <h1 class='month'>
+                    <%= currency @done_you_arr_month %>
+                    <span class='sub'>
+                      Target: <%= currency current_user.current_assignation.month_target %>
+                    </span>
+                  </h1>
+                </div>
+                <div class='span6'>
+                  Your MRR
+                  <h1 class='quarter'>
+                    <%= currency @done_you_arr/12.0 %>
+                    <span class='sub'>
+                      Target: <%= currency current_user.current_assignation.mrr %>
+                    </span>
+                  </h1>
+                  <h1 class='month'>
+                    <%= currency @done_you_arr_month/12.0 %>
+                    <span class='sub'>
+                      Target: <%= currency current_user.current_assignation.month_mrr %>
+                    </span>
+                  </h1>
+                </div>
+                <div class='span1'></div>
+                <div class='span11'>
+                  <h3>Your target completion MRR</h3>
+
+                  <div class="progress progress-striped progress-success">
+                    <%= bar('quarter', @percent_you_arr) %>
+                    <%= bar('month', @percent_you_arr_month) %>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+        </div>
+      <% else %>
+        <script type="text/javascript">
+          $(document).ready(function(){
+              $('.team').removeClass('team-border');
+              $('.team').removeClass('span6');
+              $('.team').removeClass('span12');
+          });
+        </script>
+      <% end %>
+    </div>
+  </div>
+
+  <div class='space'></div>
+
+  <div class='row-fluid'>
+    <div class='span12'>
+      <h3>Team members performance</h3>
+      <table class='table table-striped numbers'>
+        <tr>
+          <th>Name</th>
+          <th>DONE</th>
+          <% if current_user.is_admin %>
+          <th>AAR Done</th>
+          <% end %>
+        </tr>
+        <%- @salesmen.each do |salesman| %>
+        <tr>
+          <td>
+            <%= salesman.name %>
+          </td>
+          <td>
+            <%= percentage(done: salesman.done_arr_month, total: salesman.current_assignation.month_target) %>
+          </td>
+          <% if current_user.is_admin %>
+          <td>
+            $<%= number_with_precision(salesman.done_arr_month.floor, :precision => 0, :delimiter => ',') %>
+          </td>
+          <% end %>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+
+
+<script type='text/javascript'>
+  function switch_numbers(name){
+    return function(){
+      var type = $("."+name+" select option:selected").val();
+      $("."+name+" h1, ."+name+" .bar").hide('slow', function(){
+        if ($(this).hasClass(type)) {
+          $(this).show('slow');
+        }
+      });
+    }
+  }
+  $(document).ready(function() {
+    $(".quarter, .month").hide();
+    $('.you select').change(switch_numbers('you')).trigger('change');
+    $('.team select').change(switch_numbers('team')).trigger('change');
+
+    if (DASHBOARD) {
+      $('.you').remove();
+      $('select').remove();
+      $('.team').removeClass('span6');
+      $('.team').addClass('span12');
+      $('.team').removeClass('team-border');
+      $('.space').first().after("<div class='row-fluid'><div class='you span12 you-dashboard'></div></div>");
+      $('.space').first().remove();
+
+      $('.team').css('font-size', '2em');
+      $('.team').css('line-height', '1.4em');
+      $('.team h1').css('line-height', '1.4em');
+      $('.team h1').css('font-size', '2em');
+    }
+
+    $('.refresh').click(function(){window.location.reload();});
+  });
+</script>
+<% end %>

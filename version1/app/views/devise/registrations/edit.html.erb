@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="span12">
+
+    <% if @admin_view %>
+    <h2>Edit the account details of <%= @user.email %></h2>
+    <% else %>
+    <h2>Edit your account details</h2>
+    <% end %>
+
+    <%= form_for(resource, :as => resource_name, :url => update_user_path(@user.id), :html => { :method => :put }) do |f| %>
+    <%= devise_error_messages! %>
+
+    <div class="clearfix">
+      <%= f.label :email %>
+      <%= f.email_field :email %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <div class="control-group">
+        <%= f.label :password %>
+        <div class="controls">
+          <%= f.password_field :password %>
+          <p class="help-block">Leave blank if you don't want to change it.</p>
+        </div>
+      </div>
+
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation %>
+
+      <% if !@admin_view %>
+      <div class="control-group">
+        <%= f.label :current_password %>
+        <div class="controls">
+          <%= f.password_field :current_password %>
+          <p class="help-block">We need your current password to confirm your changes.</p>
+        </div>
+      </div>
+      <% else %>
+      <%= f.label(:is_admin) do %>
+      <%= f.check_box :is_admin %>
+      Is admin?
+      <% end %>
+
+      <%= f.label(:email_notification) do %>
+      <%= f.check_box :email_notification %>
+      Email Notifications
+      <% end %>
+      <% end %>
+
+      <%= f.label(:dashboard_range) %>
+      <%= f.select(:dashboard_range, User::DashboardRange) %>
+    </div>
+
+    <div class="form-actions">
+      <% if @admin_view %>
+      <%= link_to "← Go back to the user's details", @user, :class => "btn" %>
+      <%= f.submit "Update the account details", :class => "btn btn-primary" %>
+      <% else %>
+      <%= link_to "← Go back to your dashboard", '/', :class => "btn" %>
+      <%= f.submit "Update your account details", :class => "btn btn-primary" %>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+</div>

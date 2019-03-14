@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>EmeaSentry</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/ico" href="/favicon.ico">
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+  <div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar-inner">
+      <div class="container-fluid">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <%= link_to('EMEA-Sentry', '/', :class => "brand") %>
+
+        <div class="pull-right">
+          <div class="nav-collapse collapse">
+            <% if user_signed_in? %>
+            <ul class="nav">
+              <% if !current_user.is_dashboard_only %>
+                <li><%= link_to(current_user.email, edit_user_registration_path) %></a></li>
+                <li><%= link_to('Dashboard', '/') %></li>
+                <li><%= link_to "Sales", sales_path %></li>
+                <li><%= link_to "Request Enablers", helpdesk_index_path %></li>
+                <% if current_user.is_admin %>
+                <li><%= link_to('Admin', admin_main_url) %></a></li>
+                <% end %>
+              <% end %>
+              <li><%= link_to('Sign out', destroy_user_session_path, method: :delete) %></li>
+              <% if current_user.is_dashboard_only %>
+                <span class='connectivity' id="status-indicator">•</span>
+              <% end %>
+            </ul>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% if session[:faked_user_by] %>
+    <div class="container-fluid faked_session_alert">
+      <div class='row-fluid'>
+        <div class='span12 alert alert-error'>
+          Be careful! You are signed as <%= current_user.name %>.
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+
+  <div class="container-fluid">
+    <% if notice or alert %>
+    <div class='row-fluid'>
+      <div class='span12'>
+        <% if notice %>
+          <p class="alert alert-info"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+          <p class="alert alert-error"><%= alert %></p>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+    <%= yield %>
+    <div class='row-fluid footer'>
+      Brought to you by <img src="/ouebdeux_small.png"/>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    <% if user_signed_in? && current_user.is_dashboard_only %>
+        var DASHBOARD=true;
+    <% else %>
+        var DASHBOARD=false;
+    <% end %>
+  </script>
+
+  <%# Support tab %>
+  <script type="text/javascript" src="//assets.zendesk.com/external/zenbox/v2.4/zenbox.js"></script>
+  <style type="text/css" media="screen, projection">
+    @import url(//assets.zendesk.com/external/zenbox/v2.4/zenbox.css);
+  </style>
+  <script type="text/javascript">
+
+    function refresh_help_tab() {
+      if ($(window).width() < 768) {
+        $("#zenbox_tab").hide();
+      }
+      else {
+        $("#zenbox_tab").show();
+      }
+    }
+
+    $(document).ready(function(){
+      if (typeof(Zenbox) !== "undefined") {
+        Zenbox.init({
+          dropboxID:   "20075547",
+          url:         "https://tissueapp.zendesk.com",
+          tabID:       "help",
+          tabColor:    "black",
+          tabPosition: "Right"
+        });
+
+        refresh_help_tab();
+        $(window).resize(refresh_help_tab);
+      }
+    });
+
+  </script>
+
+  <%# Gauges analytics %>
+  <script type="text/javascript">
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4fb6817df5a1f52af20000a1');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+</body>
+</html>
